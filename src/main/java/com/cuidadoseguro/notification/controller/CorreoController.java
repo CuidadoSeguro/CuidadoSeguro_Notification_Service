@@ -2,6 +2,7 @@
 package com.cuidadoseguro.notification.controller;
 
 import com.cuidadoseguro.notification.dto.CorreoDTO;
+import com.cuidadoseguro.notification.dto.CorreoConAdjuntoDTO;
 import com.cuidadoseguro.notification.service.CorreoService;
 
 import jakarta.validation.Valid;
@@ -34,5 +35,17 @@ public class CorreoController {
                         "mensaje", "Correo enviado correctamente."
                 )
         );
+    }
+
+    @PostMapping("/enviar-pdf")
+    public ResponseEntity<Map<String, String>> enviarCorreoConPdf(
+            @Valid @RequestBody CorreoConAdjuntoDTO correo) {
+
+        correoService.enviarCorreoConAdjunto(correo);
+
+        return ResponseEntity.ok(Map.of(
+                "estado", "ENVIADO",
+                "mensaje", "Correo con PDF adjunto enviado correctamente."
+        ));
     }
 }
